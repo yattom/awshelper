@@ -1,0 +1,7 @@
+Include/
+Lib/
+Scripts/
+share/
+tcl/
+__pycache__/
+pip-selfcheck.json
