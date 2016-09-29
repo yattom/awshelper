@@ -102,6 +102,14 @@ class Aws:
         keypair_name = self.opts.get("KEY_PAIR_NAME")
         sh('ssh -o StrictHostKeyChecking=no -i ' + keypair_name + '.pem ec2-user@{0} "{1}"'.format(ip_addr, cmd))
 
+    def scp_r2l(self, src, dst, ip_addr):
+        keypair_name = self.opts.get("KEY_PAIR_NAME")
+        sh("scp -o StrictHostKeyChecking=no -i " + keypair_name + ".pem ec2-user@{0}:{1} {2}".format(ip_addr, src, dst))
+
+    def scp_l2r(self, src, dst, ip_addr):
+        keypair_name = self.opts.get("KEY_PAIR_NAME")
+        sh("scp -o StrictHostKeyChecking=no -i " + keypair_name + ".pem {0} ec2-user@{1}:{2}".format(src, ip_addr, dst))
+
 
 class Canned:
     '''
