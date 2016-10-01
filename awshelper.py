@@ -98,9 +98,10 @@ class Aws:
     def __call__(self, *args, **kwargs):
         return self.aws(self.opts, *args, **kwargs)
 
-    def ssh(self, cmd, ip_addr):
+    def ssh(self, cmd, ip_addr, format_args=[]):
         keypair_name = self.opts.get("KEY_PAIR_NAME")
-        sh('ssh -o StrictHostKeyChecking=no -i ' + keypair_name + '.pem ec2-user@{0} "{1}"'.format(ip_addr, cmd))
+        formatted_cmd = cmd.format(*format_args, **self.opts.all())
+        sh('ssh -o StrictHostKeyChecking=no -i ' + keypair_name + '.pem ec2-user@{0} "{1}"'.format(ip_addr, formatted_cmd))
 
     def scp_r2l(self, src, dst, ip_addr):
         keypair_name = self.opts.get("KEY_PAIR_NAME")
